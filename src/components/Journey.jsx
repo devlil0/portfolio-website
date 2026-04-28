@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown, Zap, GraduationCap, Rocket, Users, Heart, Database, Infinity as InfinityIcon } from 'lucide-react'
+import { ChevronDown, Zap, GraduationCap, Rocket, Users, Heart, Settings, Infinity as InfinityIcon } from 'lucide-react'
 
 const milestones = [
   {
@@ -54,7 +54,7 @@ const milestones = [
   },
   {
     year: '2026',
-    icon: Database,
+    icon: Settings,
     color: 'text-orange-400',
     borderColor: 'border-orange-400/30',
     title: 'Building Real Systems',
@@ -96,14 +96,14 @@ export default function Journey() {
               <div key={`item-${i}`} className="flex gap-10 items-start">
                 <div className="flex flex-col items-center w-20 shrink-0 self-stretch">
                   <div
-                    className={`w-20 h-20 rounded-full border ${item.borderColor} bg-gradient-to-br from-[#091427] to-[#040913] ring-1 ring-white/5 shadow-[0_0_0_1px_rgba(15,23,42,0.45),0_12px_30px_rgba(2,6,23,0.4)] flex items-center justify-center relative z-10 shrink-0`}
+                    className={`w-20 h-20 rounded-full border ${item.borderColor} bg-[#02050d] ring-1 ring-white/5 shadow-[0_0_0_1px_rgba(15,23,42,0.45),0_12px_30px_rgba(2,6,23,0.4)] flex items-center justify-center relative z-10 shrink-0`}
                   >
                     <Icon size={30} className={item.color} />
                   </div>
                   <div className="border border-slate-700 bg-[#040913] px-3 py-1 mt-2 z-10 rounded-md shrink-0">
                     <span
                       className="text-slate-400 text-sm tracking-[0.22em]"
-                      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}
+                      style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 400 }}
                     >
                       {item.year}
                     </span>
@@ -113,7 +113,7 @@ export default function Journey() {
                   )}
                 </div>
 
-                <div className="flex-1 bg-[#0d1829] rounded-xl hover:bg-[#111f35] transition-colors duration-200">
+                <div className="flex-1 bg-[#091427] rounded-xl hover:bg-[#0d1829] transition-colors duration-200">
                   <button
                     className="w-full flex items-start justify-between p-7 text-left"
                     onClick={() => setOpen(isOpen ? null : i)}

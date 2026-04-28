@@ -123,11 +123,11 @@ export default function Navbar() {
       <div className="hidden md:flex fixed top-5 left-1/2 -translate-x-1/2 z-50 justify-center w-full pointer-events-none px-6">
         <div className="intro-nav intro-nav--desktop pointer-events-auto">
           <nav
-            className="navbar-strip flex items-center gap-3 px-10 py-4 rounded-[999px]"
+            className="navbar-strip flex items-center gap-3 px-10 py-4 rounded-none"
             onMouseDown={handleDesktopNavMouseDown}
             style={{
               transform: `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0)`,
-              transition: isDraggingNav ? 'none' : 'transform 280ms cubic-bezier(0.22, 1, 0.36, 1)',
+              transition: isDraggingNav ? 'none' : 'transform 620ms cubic-bezier(0.16, 1, 0.3, 1)',
               cursor: isDraggingNav ? 'grabbing' : 'grab',
             }}
           >

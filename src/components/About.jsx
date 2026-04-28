@@ -23,7 +23,7 @@ export default function About() {
           <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
             Murillo Oliveira
           </h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-700 leading-tight mt-1">
+          <h3 className="about-gradient-word text-4xl md:text-5xl font-bold leading-tight mt-1">
             Backend<br />Developer
           </h3>
           <div className="w-8 h-px bg-slate-600 mt-5 mb-8" />
@@ -35,13 +35,13 @@ export default function About() {
             in games, music, and technology kept growing.
             <br /><br />
             Today, that curiosity has turned into purpose: I study Systems Analysis and
-            Development and found in backend development with Java a way to build real
+            Development and found in backend development with Java and Spring Boot a way to build real
             solutions. That's how I created my first system after noticing, at work, the
             need to organize manual processes — turning an everyday problem into a practical
             application.
             <br /><br />
             I continue to grow with focus, discipline, and a constant desire to learn,
-            building my path in software development.
+            building my path in backend development.
           </p>
 
           <div className="grid grid-cols-3 gap-6">
