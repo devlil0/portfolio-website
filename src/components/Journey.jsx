@@ -78,7 +78,7 @@ export default function Journey() {
   const [open, setOpen] = useState(null)
 
   return (
-    <section id="journey" className="py-32 px-8 border-t border-slate-900">
+    <section id="journey" className="py-32 px-4 sm:px-8 border-t border-slate-900">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">The Development Journey</h2>
@@ -93,16 +93,17 @@ export default function Journey() {
             const isOpen = open === i
 
             const milestoneRow = (
-              <div key={`item-${i}`} className="flex gap-10 items-start">
-                <div className="flex flex-col items-center w-20 shrink-0 self-stretch">
+              <div key={`item-${i}`} className="flex gap-4 sm:gap-10 items-start">
+                <div className="flex flex-col items-center w-12 sm:w-20 shrink-0 self-stretch">
                   <div
-                    className={`w-20 h-20 rounded-full border ${item.borderColor} bg-[#02050d] ring-1 ring-white/5 shadow-[0_0_0_1px_rgba(15,23,42,0.45),0_12px_30px_rgba(2,6,23,0.4)] flex items-center justify-center relative z-10 shrink-0`}
+                    className={`w-12 h-12 sm:w-20 sm:h-20 rounded-full border ${item.borderColor} bg-[#02050d] ring-1 ring-white/5 shadow-[0_0_0_1px_rgba(15,23,42,0.45),0_12px_30px_rgba(2,6,23,0.4)] flex items-center justify-center relative z-10 shrink-0`}
                   >
-                    <Icon size={30} className={item.color} />
+                    <Icon size={20} className={`${item.color} sm:hidden`} />
+                    <Icon size={30} className={`${item.color} hidden sm:block`} />
                   </div>
                   <div className="border border-slate-700 bg-[#040913] px-3 py-1 mt-2 z-10 rounded-md shrink-0">
                     <span
-                      className="text-slate-400 text-sm tracking-[0.22em]"
+                      className="text-slate-400 text-xs sm:text-sm tracking-[0.22em]"
                       style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 400 }}
                     >
                       {item.year}
@@ -115,12 +116,12 @@ export default function Journey() {
 
                 <div className="flex-1 bg-[#091427] rounded-xl hover:bg-[#0d1829] transition-colors duration-200">
                   <button
-                    className="w-full flex items-start justify-between p-7 text-left"
+                    className="w-full flex items-start justify-between p-4 sm:p-7 text-left"
                     onClick={() => setOpen(isOpen ? null : i)}
                   >
                     <div>
                       <div
-                        className="text-white text-[2rem] leading-none"
+                        className="text-white text-[1.3rem] sm:text-[2rem] leading-none"
                         style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, letterSpacing: '-0.03em' }}
                       >
                         {item.title}
@@ -139,9 +140,9 @@ export default function Journey() {
                   </button>
 
                   {isOpen && (
-                    <div className="px-7 pb-7">
+                    <div className="px-4 pb-4 sm:px-7 sm:pb-7">
                       <p
-                        className="text-[1.05rem] leading-[1.9] text-slate-400"
+                        className="text-[1.05rem] leading-[1.6] sm:leading-[1.9] text-slate-400"
                         style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, letterSpacing: '-0.02em' }}
                       >
                         {item.description}
@@ -154,8 +155,8 @@ export default function Journey() {
 
             if (i < milestones.length - 1) {
               const separator = (
-                <div key={`sep-${i}`} className="flex gap-10">
-                  <div className="flex flex-col items-center w-20">
+                <div key={`sep-${i}`} className="flex gap-4 sm:gap-10">
+                  <div className="flex flex-col items-center w-12 sm:w-20">
                     <div className="hidden md:block w-px bg-slate-700 h-8" />
                   </div>
                   <div className="h-8 md:h-0 flex-1" />
