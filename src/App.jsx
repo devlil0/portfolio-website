@@ -34,7 +34,6 @@ export default function App() {
           </div>
         </div>
       )}
-      <div className="ambient-orb ambient-orb-primary" aria-hidden="true" />
       <Navbar />
       <main className="mt-14 md:mt-28">
         <Hero />
