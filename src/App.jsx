@@ -23,8 +23,25 @@ export default function App() {
     return () => window.clearTimeout(timer)
   }, [])
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className={`site-frame bg-[#040913] min-h-screen ${showIntro ? 'site-frame--intro-active' : 'site-frame--ready'}`}>
+    <>
       {showIntro && (
         <div className="intro-screen" aria-hidden="true">
           <div className="intro-screen__glow" />
@@ -34,15 +51,17 @@ export default function App() {
           </div>
         </div>
       )}
-      <Navbar />
-      <main className="mt-14 md:mt-28">
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Journey />
-        <Contact />
-      </main>
-    </div>
+      <div className={`site-frame bg-[#040913] min-h-screen ${showIntro ? 'site-frame--intro-active' : 'site-frame--ready'}`}>
+        <Navbar />
+        <main className="mt-14 md:mt-28">
+          <Hero />
+          <About />
+          <Projects />
+          <Skills />
+          <Journey />
+          <Contact />
+        </main>
+      </div>
+    </>
   )
 }

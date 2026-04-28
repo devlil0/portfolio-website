@@ -8,18 +8,20 @@ export default function About() {
   return (
     <section id="about" className="py-32 px-8">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
-        <div className="flex justify-center md:justify-start">
+        <div className="reveal flex justify-center md:justify-start">
           <div className="relative w-full max-w-sm group">
             <img
               src="/profile.png"
               alt="Murillo Oliveira"
+              loading="lazy"
+              decoding="async"
               className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-500 object-cover rounded-2xl"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#060e1c]/20 to-transparent rounded-sm" />
           </div>
         </div>
 
-        <div>
+        <div className="reveal" style={{ transitionDelay: '0.12s' }}>
           <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
             Murillo Oliveira
           </h2>

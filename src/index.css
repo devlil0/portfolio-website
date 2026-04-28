@@ -5,6 +5,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 0;
+  overflow-x: hidden;
 }
 
 body {
@@ -361,6 +362,9 @@ body {
   opacity: 0;
   transform: translateY(34px) scale(0.985);
   filter: blur(14px);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .site-frame--ready .hero-cascade-item {
@@ -669,6 +673,22 @@ body {
   }
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(64px) scale(0.92);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition:
+    opacity 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 @media (max-width: 640px) {
   .site-frame::before {
     background-size: 2.35rem 2.35rem, 2.35rem 2.35rem, 8rem 8rem, 8rem 8rem;
@@ -682,9 +702,19 @@ body {
   .hero-cascade-item {
     transform: translateY(22px) scale(0.97);
   }
+
+  .reveal {
+    transform: translateY(48px) scale(0.94);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
   .intro-screen,
   .intro-screen__glow,
   .intro-screen__typing,

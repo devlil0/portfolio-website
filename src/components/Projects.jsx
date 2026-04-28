@@ -31,16 +31,17 @@ export default function Projects() {
   return (
     <section id="work" className="py-32 px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
+        <div className="reveal mb-16">
           <p className="text-slate-500 text-xs tracking-[0.3em] uppercase mb-4">Portfolio</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white">Selected Work</h2>
         </div>
 
         <div className="space-y-6">
-          {projects.map((project) => (
+          {projects.map((project, i) => (
             <div
               key={project.title}
-              className="border border-slate-800 p-8 hover:border-slate-600 transition-colors duration-300"
+              className="reveal border border-slate-800 p-8 hover:border-slate-600 transition-colors duration-300"
+              style={{ transitionDelay: `${i * 0.15}s` }}
             >
               <div className="flex items-start justify-between mb-4">
                 <div>

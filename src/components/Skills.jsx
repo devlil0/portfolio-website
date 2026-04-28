@@ -29,14 +29,14 @@ export default function Skills() {
   return (
     <section id="skills" className="py-32 px-8 border-t border-slate-900">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
+        <div className="reveal mb-16">
           <p className="text-slate-500 text-xs tracking-[0.3em] uppercase mb-4">Expertise</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white">Technical Skills</h2>
         </div>
 
         <div className="space-y-8">
           {skillGroups.map(({ label, skills }, i) => (
-            <div key={`${label}-${i}`} className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8">
+            <div key={`${label}-${i}`} className="reveal flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8" style={{ transitionDelay: `${i * 0.08}s` }}>
               <div className="w-28 shrink-0 text-slate-600 text-xs uppercase tracking-widest pt-2">
                 {label}
               </div>

@@ -80,7 +80,7 @@ export default function Journey() {
   return (
     <section id="journey" className="py-32 px-4 sm:px-8 border-t border-slate-900">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="reveal text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">The Development Journey</h2>
           <p className="text-slate-500 text-lg sm:text-2xl whitespace-normal sm:whitespace-nowrap mx-auto">
             Every stage of my journey has helped to increase my skills.
