@@ -362,9 +362,6 @@ body {
   opacity: 0;
   transform: translateY(34px) scale(0.985);
   filter: blur(14px);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 .site-frame--ready .hero-cascade-item {
@@ -676,9 +673,6 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(64px) scale(0.92);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   transition:
     opacity 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
