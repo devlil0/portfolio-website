@@ -33,7 +33,7 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto">
         <div className="reveal mb-16">
           <p className="text-slate-500 text-xs tracking-[0.3em] uppercase mb-4">Portfolio</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Selected Work</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white">projects</h2>
         </div>
 
         <div className="space-y-6">

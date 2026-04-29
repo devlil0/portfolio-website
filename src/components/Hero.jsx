@@ -5,7 +5,7 @@ export default function Hero() {
   const [isExploreOpen, setIsExploreOpen] = useState(false)
 
   return (
-    <section id="home" className="hero-shell min-h-screen flex flex-col items-center justify-center text-center px-6 sm:px-8 pt-10 md:pt-0">
+    <section id="home" className="hero-shell min-h-screen flex flex-col items-center justify-center text-center px-6 sm:px-8 pt-10 md:pt-0 pb-32 md:pb-48">
       <p className="hero-cascade-item hero-role-label text-[0.72rem] md:text-[0.92rem] uppercase mb-8 md:mb-10">
         BACKEND DEVELOPER
       </p>
