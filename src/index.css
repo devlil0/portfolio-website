@@ -16,6 +16,15 @@ body {
   overflow-x: hidden;
 }
 
+#about,
+#work,
+#skills,
+#journey,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 .hero-role-label {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 300;
@@ -332,7 +341,7 @@ body {
   width: 0;
   overflow: hidden;
   white-space: nowrap;
-  animation: typingReveal 0.95s steps(7, end) 0.2s forwards;
+  animation: typingReveal 0.58s steps(7, end) 0.12s forwards;
 }
 
 .intro-screen__cursor {
@@ -342,8 +351,8 @@ body {
   color: rgba(191, 219, 254, 0.95);
   opacity: 0;
   animation:
-    cursorAppear 0.01s linear 1.15s forwards,
-    cursorBlink 0.8s step-end 1.15s infinite;
+    cursorAppear 0.01s linear 0.72s forwards,
+    cursorBlink 0.62s step-end 0.72s infinite;
 }
 
 .intro-nav {
@@ -361,7 +370,7 @@ body {
 .hero-cascade-item {
   opacity: 0;
   transform: translateY(34px) scale(0.985);
-  filter: blur(14px);
+  filter: blur(10px);
 }
 
 .site-frame--ready .hero-cascade-item {
@@ -453,12 +462,12 @@ body {
   0% {
     opacity: 0;
     transform: translateY(34px) scale(0.985);
-    filter: blur(14px);
+    filter: blur(10px);
   }
   55% {
     opacity: 1;
     transform: translateY(-2px) scale(1.003);
-    filter: blur(1px);
+    filter: blur(2px);
   }
   100% {
     opacity: 1;
@@ -673,11 +682,11 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(64px) scale(0.92);
-  filter: blur(12px);
+  filter: blur(8px);
   transition:
-    opacity 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    filter 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {
@@ -723,7 +732,7 @@ body {
   .intro-screen {
     animation:
       introBackgroundShift 0.35s ease-out 0.05s forwards,
-      introScreenExit 0.28s ease 0.72s forwards;
+      introScreenExit 0.28s ease 2.72s forwards;
   }
 
   .intro-screen__glow {
@@ -737,7 +746,7 @@ body {
   .intro-screen__cursor {
     animation:
       cursorAppear 0.01s linear 0.55s forwards,
-      cursorBlink 0.8s step-end 0.55s infinite;
+      cursorBlink 0.62s step-end 0.55s infinite;
   }
 
   .site-frame--ready .intro-nav--mobile,
@@ -749,7 +758,7 @@ body {
   }
 
   .hero-floating-word {
-    animation: none;
+    animation: heroWordPulse 4.8s ease-in-out infinite;
     opacity: 1;
     filter: none;
   }

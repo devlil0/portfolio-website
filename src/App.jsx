@@ -11,14 +11,19 @@ export default function App() {
   const [showIntro, setShowIntro] = useState(true)
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const introDuration = reducedMotion ? 1000 : 3000
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 
     const timer = window.setTimeout(() => {
       setShowIntro(false)
-    }, introDuration)
+    }, 3000)
 
     return () => window.clearTimeout(timer)
   }, [])

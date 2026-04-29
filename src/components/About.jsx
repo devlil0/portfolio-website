@@ -13,6 +13,8 @@ export default function About() {
             <img
               src="/profile.png"
               alt="Murillo Oliveira"
+              width="941"
+              height="1672"
               loading="lazy"
               decoding="async"
               className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-500 object-cover rounded-2xl"

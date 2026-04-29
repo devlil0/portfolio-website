@@ -17,22 +17,37 @@ const socialLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [isDraggingNav, setIsDraggingNav] = useState(false)
+  const navRef = useRef(null)
   const dragStartRef = useRef({ mouseX: 0, mouseY: 0 })
+  const pendingOffsetRef = useRef({ x: 0, y: 0 })
+  const animationFrameRef = useRef(null)
   const didDragRef = useRef(false)
 
   const closeMenu = () => setOpen(false)
+
+  const applyNavOffset = () => {
+    animationFrameRef.current = null
+
+    if (!navRef.current) return
+
+    const { x, y } = pendingOffsetRef.current
+    navRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`
+  }
 
   const handleDesktopNavMouseDown = (event) => {
     if (event.button !== 0) return
 
     dragStartRef.current = {
-      mouseX: event.clientX - dragOffset.x,
-      mouseY: event.clientY - dragOffset.y,
+      mouseX: event.clientX,
+      mouseY: event.clientY,
     }
     didDragRef.current = false
     setIsDraggingNav(true)
+
+    if (navRef.current) {
+      navRef.current.style.transition = 'none'
+    }
 
     const handleMouseMove = (moveEvent) => {
       const nextOffset = {
@@ -44,14 +59,29 @@ export default function Navbar() {
         didDragRef.current = true
       }
 
-      setDragOffset(nextOffset)
+      pendingOffsetRef.current = nextOffset
+
+      if (animationFrameRef.current === null) {
+        animationFrameRef.current = window.requestAnimationFrame(applyNavOffset)
+      }
     }
 
     const handleMouseUp = () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
+
+      if (animationFrameRef.current !== null) {
+        window.cancelAnimationFrame(animationFrameRef.current)
+        animationFrameRef.current = null
+      }
+
+      pendingOffsetRef.current = { x: 0, y: 0 }
+      if (navRef.current) {
+        navRef.current.style.transition = 'transform 620ms cubic-bezier(0.16, 1, 0.3, 1)'
+        navRef.current.style.transform = 'translate3d(0, 0, 0)'
+      }
+
       setIsDraggingNav(false)
-      setDragOffset({ x: 0, y: 0 })
     }
 
     window.addEventListener('mousemove', handleMouseMove)
@@ -123,10 +153,10 @@ export default function Navbar() {
       <div className="hidden md:flex fixed top-5 left-1/2 -translate-x-1/2 z-50 justify-center w-full pointer-events-none px-6">
         <div className="intro-nav intro-nav--desktop pointer-events-auto">
           <nav
+            ref={navRef}
             className="navbar-strip flex items-center gap-3 px-10 py-4 rounded-none"
             onMouseDown={handleDesktopNavMouseDown}
             style={{
-              transform: `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0)`,
               transition: isDraggingNav ? 'none' : 'transform 620ms cubic-bezier(0.16, 1, 0.3, 1)',
               cursor: isDraggingNav ? 'grabbing' : 'grab',
             }}
