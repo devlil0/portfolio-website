@@ -673,14 +673,17 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(64px) scale(0.92);
+  filter: blur(12px);
   transition:
     opacity 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
 @media (max-width: 640px) {
@@ -704,28 +707,51 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .reveal {
-    transition: none;
-    opacity: 1;
+    transition:
+      opacity 0.35s ease,
+      filter 0.35s ease;
     transform: none;
+    filter: blur(4px);
   }
 
-  .intro-screen,
-  .intro-screen__glow,
-  .intro-screen__typing,
-  .intro-screen__cursor,
-  .intro-nav,
-  .hero-cascade-item,
-  .mobile-menu-sheet,
-  .mobile-menu-item,
-  .hero-floating-word {
-    animation: none;
+  .reveal.is-visible {
     opacity: 1;
+    transform: none;
     filter: none;
   }
 
   .intro-screen {
-    opacity: 0;
-    visibility: hidden;
+    animation:
+      introBackgroundShift 0.35s ease-out 0.05s forwards,
+      introScreenExit 0.28s ease 0.72s forwards;
+  }
+
+  .intro-screen__glow {
+    animation: introGlowIn 0.28s ease-out 0.05s forwards;
+  }
+
+  .intro-screen__typing {
+    animation: typingReveal 0.45s steps(7, end) 0.08s forwards;
+  }
+
+  .intro-screen__cursor {
+    animation:
+      cursorAppear 0.01s linear 0.55s forwards,
+      cursorBlink 0.8s step-end 0.55s infinite;
+  }
+
+  .site-frame--ready .intro-nav--mobile,
+  .site-frame--ready .intro-nav--desktop,
+  .site-frame--ready .hero-cascade-item,
+  .mobile-menu-sheet,
+  .mobile-menu-item {
+    animation-duration: 0.45s;
+  }
+
+  .hero-floating-word {
+    animation: none;
+    opacity: 1;
+    filter: none;
   }
 }
 

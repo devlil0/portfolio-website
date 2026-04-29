@@ -14,7 +14,7 @@ export default function App() {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const introDuration = reducedMotion ? 300 : 3000
+    const introDuration = reducedMotion ? 1000 : 3000
 
     const timer = window.setTimeout(() => {
       setShowIntro(false)
@@ -24,6 +24,13 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    const revealElements = document.querySelectorAll('.reveal')
+
+    if (!('IntersectionObserver' in window)) {
+      revealElements.forEach((el) => el.classList.add('is-visible'))
+      return undefined
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -36,7 +43,7 @@ export default function App() {
       { threshold: 0, rootMargin: '0px 0px -40px 0px' }
     )
 
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+    revealElements.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [])
 
