@@ -3,11 +3,11 @@ import { useRef, useState } from 'react'
 import { Home, Briefcase, User, Code2, Mail, Github, Linkedin, Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { icon: Home,      label: 'Home',    href: '#home' },
-  { icon: User,      label: 'About',   href: '#about' },
-  { icon: Briefcase, label: 'Work',    href: '#work' },
-  { icon: Code2,     label: 'Skills',  href: '#skills' },
-  { icon: Mail,      label: 'Contact', href: '#contact' },
+  { icon: Home,      label: 'Home',    sectionId: 'home',    path: '/' },
+  { icon: User,      label: 'About',   sectionId: 'about',   path: '/about' },
+  { icon: Briefcase, label: 'Work',    sectionId: 'work',    path: '/selected-work' },
+  { icon: Code2,     label: 'Skills',  sectionId: 'skills',  path: '/skills' },
+  { icon: Mail,      label: 'Contact', sectionId: 'contact', path: '/contact' },
 ]
 
 const socialLinks = [
@@ -88,11 +88,15 @@ export default function Navbar() {
     window.addEventListener('mouseup', handleMouseUp)
   }
 
-  const handleDesktopNavClick = (event) => {
+  const handleDesktopNavClick = (event, sectionId, path) => {
+    event.preventDefault()
     if (didDragRef.current) {
-      event.preventDefault()
       didDragRef.current = false
+      return
     }
+    const el = document.getElementById(sectionId)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    window.history.pushState(null, '', path)
   }
 
   return (
@@ -120,11 +124,17 @@ export default function Navbar() {
       {/* ── Mobile: dropdown menu ── */}
       {open && (
         <div className="mobile-menu-sheet md:hidden fixed top-14 left-0 right-0 z-40 bg-[#040913]/70 supports-[backdrop-filter]:bg-[#040913]/50 backdrop-blur-xl border-b border-white/10 shadow-[0_18px_40px_rgba(4,9,19,0.34)] py-4 px-6 flex flex-col gap-1">
-          {navLinks.map(({ icon: Icon, label, href }) => (
+          {navLinks.map(({ icon: Icon, label, sectionId, path }) => (
             <a
               key={label}
-              href={href}
-              onClick={closeMenu}
+              href={path}
+              onClick={(e) => {
+                e.preventDefault()
+                closeMenu()
+                const el = document.getElementById(sectionId)
+                if (el) el.scrollIntoView({ behavior: 'smooth' })
+                window.history.pushState(null, '', path)
+              }}
               className="mobile-menu-item flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-200 py-3 border-b border-slate-900 text-sm"
             >
               <Icon size={15} />
@@ -163,11 +173,11 @@ export default function Navbar() {
           >
             {navLinks
               .filter(({ label }) => label !== 'Contact')
-              .map(({ icon: Icon, label, href }) => (
+              .map(({ icon: Icon, label, sectionId, path }) => (
                 <a
                   key={label}
-                  href={href}
-                  onClick={handleDesktopNavClick}
+                  href={path}
+                  onClick={(e) => handleDesktopNavClick(e, sectionId, path)}
                   className="navbar-strip__link group inline-flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-200"
                 >
                   <Icon size={20} className="opacity-85 group-hover:opacity-100 transition-opacity duration-200" />

@@ -7,6 +7,19 @@ import Skills from './components/Skills'
 import Journey from './components/Journey'
 import Contact from './components/Contact'
 
+const SECTION_PATHS = {
+  home: '/',
+  about: '/about',
+  work: '/selected-work',
+  skills: '/skills',
+  journey: '/journey',
+  contact: '/contact',
+}
+
+const PATH_TO_SECTION = Object.fromEntries(
+  Object.entries(SECTION_PATHS).map(([id, path]) => [path, id])
+)
+
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
 
@@ -19,7 +32,13 @@ export default function App() {
       window.history.replaceState(null, '', window.location.pathname + window.location.search)
     }
 
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    const sectionId = PATH_TO_SECTION[window.location.pathname]
+    if (sectionId && sectionId !== 'home') {
+      const el = document.getElementById(sectionId)
+      if (el) el.scrollIntoView({ behavior: 'auto' })
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
 
     const timer = window.setTimeout(() => {
       setShowIntro(false)
@@ -50,6 +69,29 @@ export default function App() {
 
     revealElements.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return undefined
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const path = SECTION_PATHS[entry.target.id]
+            if (path) window.history.replaceState(null, '', path)
+          }
+        })
+      },
+      { threshold: 0.4 }
+    )
+
+    Object.keys(SECTION_PATHS).forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) sectionObserver.observe(el)
+    })
+
+    return () => sectionObserver.disconnect()
   }, [])
 
   return (
