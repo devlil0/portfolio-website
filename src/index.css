@@ -49,18 +49,26 @@ body {
 .hero-floating-word {
   display: inline-block;
   position: relative;
-  color: rgba(255, 255, 255, 0.82);
+  background: linear-gradient(90deg, #dbeafe 0%, #93c5fd 32%, #c4b5fd 68%, #bbf7d0 100%);
+  background-size: 240% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #bfdbfe;
   text-shadow:
     0 0 8px rgba(96, 165, 250, 0.08),
     0 0 18px rgba(191, 219, 254, 0.05);
-  will-change: transform, opacity, text-shadow, color;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity, text-shadow, background-position;
   animation:
     heroWordPulse 3.8s ease-in-out infinite,
-    heroWordDrift 5.6s ease-in-out infinite;
+    heroWordDrift 5.6s ease-in-out infinite,
+    heroWordGradientFlow 6.2s ease-in-out infinite;
 }
 
 .hero-floating-word--delay {
-  animation-delay: 0.28s, 0.42s;
+  animation-delay: 0.28s, 0.42s, 0.18s;
 }
 
 .hero-footnote {
@@ -537,10 +545,20 @@ body {
 @keyframes heroWordDrift {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+@keyframes heroWordGradientFlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 
@@ -758,7 +776,10 @@ body {
   }
 
   .hero-floating-word {
-    animation: heroWordPulse 4.8s ease-in-out infinite;
+    animation:
+      heroWordPulse 4.8s ease-in-out infinite,
+      heroWordDrift 6.4s ease-in-out infinite,
+      heroWordGradientFlow 7.2s ease-in-out infinite;
     opacity: 1;
     filter: none;
   }
