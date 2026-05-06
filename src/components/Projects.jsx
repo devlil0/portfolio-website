@@ -2,8 +2,21 @@ import { Github } from 'lucide-react'
 
 const projects = [
   {
+    title: 'Whey Promotion Bot',
+    year: '2026',
+    tech: ['Java', 'Spring Boot', 'Spring Data JPA', 'Spring WebFlux', 'Spring Schedule', 'Railway', 'Docker'],
+    description: [
+    'Built a price monitoring bot that tracks whey protein deals across major Brazilian supplement stores.',
+    'Collected prices twice a day from 10+ sources, including Growth Supplements, Dark Lab, ProFit Labs, Soldiers and Black Skull.',
+    'Calculated real-time cost-benefit rankings based on price per gram of protein to identify the best deals.',
+    'Implemented automatic promotion detection when a product drops 15% or more below its 7-day moving average.',
+    'Generated daily rankings with product images, direct purchase links and updated pricing data.',
+    'Exposed a REST API to query live rankings, tracked products and active offers.'],
+    github: 'https://github.com/devlil0/whey-promotion-bot',
+  },
+  {
     title: 'Uniform Management System',
-    year: '2026 — Present',
+    year: '2026',
     tech: ['Java', 'Spring Boot', 'Spring Data JPA', 'PostgreSQL', 'REST API'],
     description: [
       'Centralized the operational flow of a clothing factory (orders, production, stock, delivery), replacing spreadsheets and manual processes.',
@@ -12,18 +25,6 @@ const projects = [
       'Structured in clean layers (Controller, Service, Repository) applying OOP best practices and REST standards.',
     ],
     github: 'https://github.com/devlil0/uniform-system',
-  },
-  {
-    title: 'Free Fire Telegram Bot',
-    year: '2026',
-    tech: ['Java', 'Spring Boot', 'Spring WebFlux', 'Docker', 'Maven'],
-    description: [
-      'Built a Telegram bot that queries player profiles and account ban status via external public APIs.',
-      'Integrated external services reactively and non-blocking with Spring WebFlux (WebClient) for efficient HTTP calls.',
-      'Implemented /ban <UID> and /player <UID> commands with input validation, error handling and layered architecture.',
-      'Containerized with Docker for agile deployment in any environment.',
-    ],
-    github: 'https://github.com/devlil0/freefire-telegram-bot',
   },
 ]
 

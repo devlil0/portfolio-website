@@ -33,7 +33,7 @@ export default function About() {
           <div className="w-8 h-px bg-slate-600 mt-5 mb-8" />
 
           <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-12">
-            Every line of code tells a story — and mine began with a curiosity about how
+            Every line of code tells a story, and mine began with a curiosity about how
             technology works under the hood. As a child, I used to take apart phones and
             computers trying to understand what was beyond the surface, while my interest
             in games, music, and technology kept growing.
@@ -41,7 +41,7 @@ export default function About() {
             Today, that curiosity has turned into purpose: I study Systems Analysis and
             Development and found in backend development with Java and Spring Boot a way to build real
             solutions. That's how I created my first system after noticing, at work, the
-            need to organize manual processes — turning an everyday problem into a practical
+            need to organize manual processes, turning an everyday problem into a practical
             application.
             <br /><br />
             I continue to grow with focus, discipline, and a constant desire to learn,
