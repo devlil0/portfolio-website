@@ -1,18 +1,15 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
 import About from './components/About'
-import Projects from './components/Projects'
-import Skills from './components/Skills'
-import Journey from './components/Journey'
-import Contact from './components/Contact'
+
+const Projects = lazy(() => import('./components/Projects'))
+const Skills = lazy(() => import('./components/Skills'))
+const Contact = lazy(() => import('./components/Contact'))
 
 const SECTION_PATHS = {
-  home: '/',
-  about: '/about',
+  about: '/',
   work: '/selected-work',
   skills: '/skills',
-  journey: '/journey',
   contact: '/contact',
 }
 
@@ -20,8 +17,17 @@ const PATH_TO_SECTION = Object.fromEntries(
   Object.entries(SECTION_PATHS).map(([id, path]) => [path, id])
 )
 
+PATH_TO_SECTION['/about'] = 'about'
+
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
+  const [activeSection, setActiveSection] = useState(() => PATH_TO_SECTION[window.location.pathname] || 'about')
+
+  const navigateToSection = useCallback((sectionId, path) => {
+    setActiveSection(sectionId)
+    window.history.pushState(null, '', path)
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [])
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -32,28 +38,43 @@ export default function App() {
       window.history.replaceState(null, '', window.location.pathname + window.location.search)
     }
 
-    const sectionId = PATH_TO_SECTION[window.location.pathname]
-    if (sectionId && sectionId !== 'home') {
-      const el = document.getElementById(sectionId)
-      if (el) el.scrollIntoView({ behavior: 'auto' })
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-    }
+    setActiveSection(PATH_TO_SECTION[window.location.pathname] || 'about')
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 
     const timer = window.setTimeout(() => {
       setShowIntro(false)
-    }, 3000)
+    }, 1900)
 
     return () => window.clearTimeout(timer)
   }, [])
 
   useEffect(() => {
-    const revealElements = document.querySelectorAll('.reveal')
+    const preloadSections = () => {
+      import('./components/Projects')
+      import('./components/Skills')
+      import('./components/Contact')
+      import('./components/AboutTimeline')
+    }
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preloadSections, { timeout: 3000 })
+      return () => window.cancelIdleCallback(idleId)
+    }
+
+    const timer = window.setTimeout(preloadSections, 2500)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const root = document.querySelector('main')
+    if (!root) return undefined
 
     if (!('IntersectionObserver' in window)) {
-      revealElements.forEach((el) => el.classList.add('is-visible'))
+      root.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'))
       return undefined
     }
+
+    const observedElements = new WeakSet()
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -67,32 +88,63 @@ export default function App() {
       { threshold: 0, rootMargin: '0px 0px -40px 0px' }
     )
 
-    revealElements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+    const observeRevealElements = (container = root) => {
+      container.querySelectorAll('.reveal').forEach((el) => {
+        if (observedElements.has(el) || el.classList.contains('is-visible')) return
+        observedElements.add(el)
+        observer.observe(el)
+      })
+    }
 
-  useEffect(() => {
-    if (!('IntersectionObserver' in window)) return undefined
+    observeRevealElements()
 
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const path = SECTION_PATHS[entry.target.id]
-            if (path) window.history.replaceState(null, '', path)
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (!(node instanceof Element)) return
+
+          if (node.matches('.reveal') && !observedElements.has(node) && !node.classList.contains('is-visible')) {
+            observedElements.add(node)
+            observer.observe(node)
           }
-        })
-      },
-      { threshold: 0.4 }
-    )
 
-    Object.keys(SECTION_PATHS).forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) sectionObserver.observe(el)
+          observeRevealElements(node)
+        })
+      })
     })
 
-    return () => sectionObserver.disconnect()
+    mutationObserver.observe(root, { childList: true, subtree: true })
+
+    return () => {
+      mutationObserver.disconnect()
+      observer.disconnect()
+    }
+  }, [activeSection])
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveSection(PATH_TO_SECTION[window.location.pathname] || 'about')
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
+
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case 'about':
+        return <About onNavigate={navigateToSection} />
+      case 'work':
+        return <Projects />
+      case 'skills':
+        return <Skills />
+      case 'contact':
+        return <Contact />
+      default:
+        return <About onNavigate={navigateToSection} />
+    }
+  }
 
   return (
     <>
@@ -105,15 +157,26 @@ export default function App() {
           </div>
         </div>
       )}
-      <div className={`site-frame bg-[#040913] min-h-screen ${showIntro ? 'site-frame--intro-active' : 'site-frame--ready'}`}>
-        <Navbar />
-        <main className="mt-14 md:mt-28">
-          <Hero />
-          <About />
-          <Projects />
-          <Skills />
-          <Journey />
-          <Contact />
+      <div className={`site-frame min-h-screen ${showIntro ? 'site-frame--intro-active' : 'site-frame--ready'}`}>
+        <div className="molecule-field" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+        <Navbar activeSection={activeSection} onNavigate={navigateToSection} />
+        <main>
+          <Suspense fallback={<div className="section-shell section-inner text-slate-500">Loading...</div>}>
+            {renderActiveSection()}
+          </Suspense>
         </main>
       </div>
     </>

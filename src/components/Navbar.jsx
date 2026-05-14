@@ -1,13 +1,11 @@
-
-import { useRef, useState } from 'react'
-import { Home, Briefcase, User, Code2, Mail, Github, Linkedin, Menu, X } from 'lucide-react'
+import { memo, useState } from 'react'
+import { Briefcase, User, Terminal, MessageCircle, Github, Linkedin, Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { icon: Home,      label: 'Home',    sectionId: 'home',    path: '/' },
-  { icon: User,      label: 'About',   sectionId: 'about',   path: '/about' },
+  { icon: User,      label: 'About',   sectionId: 'about',   path: '/' },
   { icon: Briefcase, label: 'Work',    sectionId: 'work',    path: '/selected-work' },
-  { icon: Code2,     label: 'Skills',  sectionId: 'skills',  path: '/skills' },
-  { icon: Mail,      label: 'Contact', sectionId: 'contact', path: '/contact' },
+  { icon: Terminal,  label: 'Skills',  sectionId: 'skills',  path: '/skills' },
+  { icon: MessageCircle, label: 'Connect With Me', sectionId: 'contact', path: '/contact' },
 ]
 
 const socialLinks = [
@@ -15,115 +13,39 @@ const socialLinks = [
   { icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com/in/murilloliveira999' },
 ]
 
-export default function Navbar() {
+function Navbar({ activeSection, onNavigate }) {
   const [open, setOpen] = useState(false)
-  const [isDraggingNav, setIsDraggingNav] = useState(false)
-  const navRef = useRef(null)
-  const dragStartRef = useRef({ mouseX: 0, mouseY: 0 })
-  const pendingOffsetRef = useRef({ x: 0, y: 0 })
-  const animationFrameRef = useRef(null)
-  const didDragRef = useRef(false)
 
   const closeMenu = () => setOpen(false)
 
-  const applyNavOffset = () => {
-    animationFrameRef.current = null
-
-    if (!navRef.current) return
-
-    const { x, y } = pendingOffsetRef.current
-    navRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`
-  }
-
-  const handleDesktopNavMouseDown = (event) => {
-    if (event.button !== 0) return
-
-    dragStartRef.current = {
-      mouseX: event.clientX,
-      mouseY: event.clientY,
-    }
-    didDragRef.current = false
-    setIsDraggingNav(true)
-
-    if (navRef.current) {
-      navRef.current.style.transition = 'none'
-    }
-
-    const handleMouseMove = (moveEvent) => {
-      const nextOffset = {
-        x: moveEvent.clientX - dragStartRef.current.mouseX,
-        y: moveEvent.clientY - dragStartRef.current.mouseY,
-      }
-
-      if (Math.abs(nextOffset.x) > 4 || Math.abs(nextOffset.y) > 4) {
-        didDragRef.current = true
-      }
-
-      pendingOffsetRef.current = nextOffset
-
-      if (animationFrameRef.current === null) {
-        animationFrameRef.current = window.requestAnimationFrame(applyNavOffset)
-      }
-    }
-
-    const handleMouseUp = () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', handleMouseUp)
-
-      if (animationFrameRef.current !== null) {
-        window.cancelAnimationFrame(animationFrameRef.current)
-        animationFrameRef.current = null
-      }
-
-      pendingOffsetRef.current = { x: 0, y: 0 }
-      if (navRef.current) {
-        navRef.current.style.transition = 'transform 620ms cubic-bezier(0.16, 1, 0.3, 1)'
-        navRef.current.style.transform = 'translate3d(0, 0, 0)'
-      }
-
-      setIsDraggingNav(false)
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseup', handleMouseUp)
-  }
-
   const handleDesktopNavClick = (event, sectionId, path) => {
     event.preventDefault()
-    if (didDragRef.current) {
-      didDragRef.current = false
-      return
-    }
-    const el = document.getElementById(sectionId)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-    window.history.pushState(null, '', path)
+    onNavigate(sectionId, path)
   }
 
   return (
     <>
-      {/* ── Mobile: top bar ── */}
-      <nav className="intro-nav intro-nav--mobile md:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-[#040913]/55 border-b border-white/10 backdrop-blur-xl supports-[backdrop-filter]:bg-[#040913]/40 shadow-[0_8px_30px_rgba(4,9,19,0.28)] flex items-center justify-between px-6">
+      <nav className="site-nav intro-nav intro-nav--mobile md:hidden fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-6">
         <a
           href="https://linkedin.com/in/murilloliveira999"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-slate-400 hover:text-white transition-colors duration-200"
+          className="text-slate-400 hover:text-purple-100 transition-colors duration-200"
           aria-label="LinkedIn"
         >
           <Linkedin size={20} />
         </a>
         <button
           onClick={() => setOpen(!open)}
-          className="text-slate-400 hover:text-white transition-colors duration-200"
+          className="text-slate-400 hover:text-purple-100 transition-colors duration-200"
           aria-label="Toggle menu"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
-      {/* ── Mobile: dropdown menu ── */}
       {open && (
-        <div className="mobile-menu-sheet md:hidden fixed top-14 left-0 right-0 z-40 bg-[#040913]/70 supports-[backdrop-filter]:bg-[#040913]/50 backdrop-blur-xl border-b border-white/10 shadow-[0_18px_40px_rgba(4,9,19,0.34)] py-4 px-6 flex flex-col gap-1">
+        <div className="site-nav-menu mobile-menu-sheet md:hidden fixed top-14 left-0 right-0 z-40 py-4 px-6 flex flex-col gap-1">
           {navLinks.map(({ icon: Icon, label, sectionId, path }) => (
             <a
               key={label}
@@ -131,11 +53,11 @@ export default function Navbar() {
               onClick={(e) => {
                 e.preventDefault()
                 closeMenu()
-                const el = document.getElementById(sectionId)
-                if (el) el.scrollIntoView({ behavior: 'smooth' })
-                window.history.pushState(null, '', path)
+                onNavigate(sectionId, path)
               }}
-              className="mobile-menu-item flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-200 py-3 border-b border-slate-900 text-sm"
+              className={`mobile-menu-item flex items-center gap-3 transition-colors duration-200 py-3 border-b border-white/10 text-sm ${
+                activeSection === sectionId ? 'text-purple-100' : 'text-slate-400 hover:text-purple-100'
+              }`}
             >
               <Icon size={15} />
               {label}
@@ -149,7 +71,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
-                className="flex items-center gap-2 text-slate-600 hover:text-white transition-colors duration-200 text-sm"
+                className="flex items-center gap-2 text-slate-500 hover:text-purple-100 transition-colors duration-200 text-sm"
               >
                 <Icon size={14} />
                 {label}
@@ -159,29 +81,25 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* ── Desktop: top blurred bar ── */}
-      <div className="hidden md:flex fixed top-5 left-1/2 -translate-x-1/2 z-50 justify-center w-full pointer-events-none px-6">
-        <div className="intro-nav intro-nav--desktop pointer-events-auto">
+      <div className="site-nav intro-nav intro-nav--desktop hidden md:flex fixed top-0 left-0 right-0 z-50 h-16">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-8">
           <nav
-            ref={navRef}
-            className="navbar-strip flex items-center gap-3 px-10 py-4 rounded-none"
-            onMouseDown={handleDesktopNavMouseDown}
-            style={{
-              transition: isDraggingNav ? 'none' : 'transform 620ms cubic-bezier(0.16, 1, 0.3, 1)',
-              cursor: isDraggingNav ? 'grabbing' : 'grab',
-            }}
+            className="navbar-strip relative flex w-full items-center justify-center gap-6 lg:gap-9"
           >
             {navLinks
-              .filter(({ label }) => label !== 'Contact')
               .map(({ icon: Icon, label, sectionId, path }) => (
                 <a
                   key={label}
                   href={path}
                   onClick={(e) => handleDesktopNavClick(e, sectionId, path)}
-                  className="navbar-strip__link group inline-flex items-center gap-3 text-slate-400 hover:text-white transition-colors duration-200"
+                  className={`navbar-strip__link group inline-flex items-center gap-2.5 transition-colors duration-200 ${
+                    sectionId === 'contact' ? 'fixed left-6' : ''
+                  } ${
+                    activeSection === sectionId ? 'text-purple-100' : 'text-slate-400 hover:text-purple-100'
+                  }`}
                 >
-                  <Icon size={20} className="opacity-85 group-hover:opacity-100 transition-opacity duration-200" />
-                  <span className="text-[0.92rem] font-semibold tracking-[-0.02em]">{label}</span>
+                  <Icon size={17} className="opacity-85 group-hover:opacity-100 transition-opacity duration-200" />
+                  <span className="text-[0.82rem] font-semibold tracking-[-0.01em]">{label}</span>
                 </a>
               ))}
           </nav>
@@ -190,3 +108,5 @@ export default function Navbar() {
     </>
   )
 }
+
+export default memo(Navbar)

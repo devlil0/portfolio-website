@@ -1,3 +1,5 @@
+import { CloudCog, ShieldCheck } from 'lucide-react'
+
 const skillGroups = [
   {
     label: 'Languages',
@@ -21,31 +23,72 @@ const skillGroups = [
   },
   {
     label: 'Languages',
-    skills: ['Portuguese — Native', 'English — Intermediate'],
+    skills: ['Portuguese (Native)', 'English (Intermediate)'],
+  },
+]
+
+const growthCards = [
+  {
+    icon: ShieldCheck,
+    label: 'Currently Improving',
+    title: 'Security & Authentication',
+    description: 'Improving backend security skills with authentication, authorization and secure API practices.',
+    skills: ['Spring Security', 'JWT', 'Auth Flow'],
+  },
+  {
+    icon: CloudCog,
+    label: 'Next Focus',
+    title: 'DevOps & Frontend',
+    description: 'Expanding my DevOps and frontend skills to build applications that are easier to deploy, automate and maintain.',
+    skills: ['AWS', 'CI/CD', 'React', 'TypeScript', 'Tailwind CSS'],
   },
 ]
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-32 px-8 border-t border-slate-900">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" className="section-shell border-t border-white/10">
+      <div className="section-inner">
         <div className="reveal mb-16">
-          <p className="text-slate-500 text-xs tracking-[0.3em] uppercase mb-4">Expertise</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Technical Skills</h2>
+          <p className="section-kicker mb-4">Expertise</p>
+          <h2 className="section-title text-4xl md:text-5xl">Technical Skills</h2>
         </div>
 
-        <div className="space-y-8">
+        <div className="tech-panel p-5 sm:p-8 space-y-7">
           {skillGroups.map(({ label, skills }, i) => (
             <div key={`${label}-${i}`} className="reveal flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8" style={{ transitionDelay: `${i * 0.08}s` }}>
-              <div className="w-28 shrink-0 text-slate-600 text-xs uppercase tracking-widest pt-2">
+              <div className="w-28 shrink-0 terminal-label text-[0.68rem] pt-2">
                 {label}
               </div>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-4 py-2 border border-slate-800 text-slate-300 text-sm hover:border-slate-500 hover:text-white transition-all duration-200 cursor-default"
+                    className="skill-chip px-4 py-2 text-slate-300 text-sm cursor-default"
                   >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-4 mt-5">
+          {growthCards.map(({ icon: Icon, label, title, description, skills }, i) => (
+            <div key={title} className="learning-card reveal tech-panel tech-panel--interactive" style={{ transitionDelay: `${0.14 + i * 0.08}s` }}>
+              <div className="learning-card__icon" aria-hidden="true">
+                <Icon size={22} />
+              </div>
+              <div>
+                <p className="terminal-label text-[0.62rem] mb-3">{label}</p>
+                <h3>{title}</h3>
+                <p className="learning-card__description">
+                  {description}
+                </p>
+              </div>
+              <div className="learning-card__tags">
+                {skills.map((skill) => (
+                  <span key={skill}>
                     {skill}
                   </span>
                 ))}
