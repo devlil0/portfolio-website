@@ -963,12 +963,12 @@ body {
 
 .hero-cascade-item {
   opacity: 0;
-  filter: blur(6px);
-  transform: translateY(42px) scale(0.94);
+  filter: blur(4px);
+  transform: translateY(34px);
 }
 
 .site-frame--ready .hero-cascade-item {
-  animation: premiumCascadePop 1.08s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: cascadeReveal 0.92s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hero-cascade-item:nth-child(1) { animation-delay: 0.28s; }
@@ -980,60 +980,31 @@ body {
 
 .reveal {
   opacity: 0;
-  filter: blur(5px);
-  transform: translateY(52px) scale(0.93);
+  filter: blur(4px);
+  transform: translateY(42px);
   transform-origin: center top;
-  will-change: opacity, filter, transform, box-shadow;
+  will-change: opacity, filter, transform;
 }
 
 .reveal.is-visible {
-  animation: premiumCascadePop 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: cascadeReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.reveal.is-visible.tech-panel,
-.reveal.is-visible .tech-panel {
-  animation:
-    premiumCascadePop 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-    panelEntryGlow 0.95s ease-out forwards;
-}
-
-@keyframes premiumCascadePop {
+@keyframes cascadeReveal {
   0% {
     opacity: 0;
-    filter: blur(5px);
-    transform: translateY(52px) scale(0.93);
+    filter: blur(4px);
+    transform: translateY(42px);
   }
-  58% {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(-7px) scale(1.018);
-  }
-  78% {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(2px) scale(0.997);
+  62% {
+    opacity: 0.92;
+    filter: blur(1px);
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
     filter: blur(0);
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes panelEntryGlow {
-  0% {
-    box-shadow:
-      0 22px 70px rgba(0, 0, 0, 0.38),
-      0 0 0 rgba(216, 180, 254, 0);
-  }
-  52% {
-    box-shadow:
-      0 34px 95px rgba(0, 0, 0, 0.52),
-      0 0 34px rgba(168, 85, 247, 0.2),
-      0 0 0 1px rgba(216, 180, 254, 0.12);
-  }
-  100% {
-    box-shadow: var(--shadow);
+    transform: translateY(0);
   }
 }
 
