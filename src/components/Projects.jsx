@@ -96,6 +96,13 @@ function getRepoPreviewUrl(repoName) {
   return `https://opengraph.githubassets.com/devlil0-${repoName}/${GITHUB_USER}/${repoName}`
 }
 
+function getVisibleRepoTopics(repo) {
+  const language = repo.language?.toLowerCase()
+  return (repo.topics || [])
+    .filter((topic) => topic.toLowerCase() !== language)
+    .slice(0, 2)
+}
+
 function handlePreviewError(event) {
   event.currentTarget.closest('.repo-card__visual')?.classList.add('repo-card__visual--fallback')
 }
@@ -433,7 +440,7 @@ export default function Projects() {
                         {repo.language}
                       </span>
                     )}
-                    {(repo.topics || []).slice(0, 2).map((topic) => (
+                    {getVisibleRepoTopics(repo).map((topic) => (
                       <span key={topic} className="project-chip text-xs px-3 py-1">
                         {topic}
                       </span>

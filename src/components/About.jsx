@@ -48,8 +48,8 @@ export default function About({ onNavigate }) {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:max-w-xl">
               <a
-                href="/selected-work"
-                onClick={(event) => handleSectionLink(event, 'work', '/selected-work')}
+                href="/work"
+                onClick={(event) => handleSectionLink(event, 'work', '/work')}
                 className="hero-action flex items-center justify-center gap-2 px-6 py-3 text-sm"
               >
                 <Briefcase size={13} />
@@ -113,9 +113,9 @@ export default function About({ onNavigate }) {
 
           <div className="grid grid-cols-3 gap-3 sm:gap-4">
             {stats.map(({ value, label }) => (
-              <div key={label} className="border border-white/10 bg-white/[0.02] p-3">
+              <div key={label} className="about-stat-card border border-white/10 bg-white/[0.02] p-3">
                 <div className="text-2xl md:text-3xl font-semibold text-white mb-1">{value}</div>
-                <div className="text-slate-500 text-xs leading-snug uppercase tracking-[0.12em]">{label}</div>
+                <div className="about-stat-label text-slate-500 text-xs leading-snug uppercase tracking-[0.12em]">{label}</div>
               </div>
             ))}
           </div>

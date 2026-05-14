@@ -8,7 +8,7 @@ const Contact = lazy(() => import('./components/Contact'))
 
 const SECTION_PATHS = {
   about: '/',
-  work: '/selected-work',
+  work: '/work',
   skills: '/skills',
   contact: '/contact',
 }
@@ -21,6 +21,14 @@ PATH_TO_SECTION['/about'] = 'about'
 
 const INTRO_MINIMUM_MS = 1900
 const INTRO_IMAGE_URL = '/paronama2.png'
+
+function isChromeBrowser() {
+  const brands = window.navigator.userAgentData?.brands || []
+  if (brands.some((brand) => brand.brand === 'Google Chrome')) return true
+
+  const userAgent = window.navigator.userAgent
+  return /Chrome|CriOS/i.test(userAgent) && !/Edg|OPR|Opera|SamsungBrowser/i.test(userAgent)
+}
 
 function preloadImage(url) {
   return new Promise((resolve) => {
@@ -49,6 +57,7 @@ const portraitImagePreload = preloadImage(INTRO_IMAGE_URL)
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
   const [activeSection, setActiveSection] = useState(() => PATH_TO_SECTION[window.location.pathname] || 'about')
+  const [useChromeLiteMode] = useState(() => isChromeBrowser())
 
   const navigateToSection = useCallback((sectionId, path) => {
     setActiveSection(sectionId)
@@ -204,7 +213,7 @@ export default function App() {
           </div>
         </div>
       )}
-      <div className={`site-frame min-h-screen ${showIntro ? 'site-frame--intro-active' : 'site-frame--ready'}`}>
+      <div className={`site-frame min-h-screen ${showIntro ? 'site-frame--intro-active' : 'site-frame--ready'} ${useChromeLiteMode ? 'site-frame--chrome-lite' : ''}`}>
         <div className="molecule-field" aria-hidden="true">
           <span />
           <span />

@@ -3,7 +3,7 @@ import { Briefcase, User, Terminal, MessageCircle, Github, Linkedin, Menu, X } f
 
 const navLinks = [
   { icon: User,      label: 'About',   sectionId: 'about',   path: '/' },
-  { icon: Briefcase, label: 'Work',    sectionId: 'work',    path: '/selected-work' },
+  { icon: Briefcase, label: 'Work',    sectionId: 'work',    path: '/work' },
   { icon: Terminal,  label: 'Skills',  sectionId: 'skills',  path: '/skills' },
   { icon: MessageCircle, label: 'Connect With Me', sectionId: 'contact', path: '/contact' },
 ]
