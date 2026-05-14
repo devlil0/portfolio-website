@@ -47,6 +47,10 @@ body {
   contain-intrinsic-size: auto 900px;
 }
 
+img {
+  content-visibility: auto;
+}
+
 .site-frame {
   position: relative;
   isolation: isolate;

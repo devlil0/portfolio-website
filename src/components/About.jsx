@@ -74,10 +74,11 @@ export default function About({ onNavigate }) {
             <img
               src="/paronama2.png"
               alt="Murillo Oliveira"
-              width="1200"
-              height="1600"
+              width="3024"
+              height="4032"
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
               className="w-full h-full grayscale group-hover:grayscale-0 transition-[filter] duration-300 object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent pointer-events-none" />

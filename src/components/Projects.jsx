@@ -197,6 +197,7 @@ export default function Projects() {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [repoPreviewsReady, setRepoPreviewsReady] = useState(false)
 
   useEffect(() => {
     let ignore = false
@@ -227,6 +228,18 @@ export default function Projects() {
     return () => {
       ignore = true
     }
+  }, [])
+
+  useEffect(() => {
+    const loadPreviews = () => setRepoPreviewsReady(true)
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(loadPreviews, { timeout: 1800 })
+      return () => window.cancelIdleCallback(idleId)
+    }
+
+    const timer = window.setTimeout(loadPreviews, 900)
+    return () => window.clearTimeout(timer)
   }, [])
 
   const overview = useMemo(() => {
@@ -282,10 +295,11 @@ export default function Projects() {
             <img
               src="/spacex.png"
               alt="Development workspace"
-              width="1000"
-              height="1333"
+              width="3024"
+              height="4032"
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
               className="work-space-image"
             />
           </div>
@@ -381,14 +395,19 @@ export default function Projects() {
                 rel="noopener noreferrer"
                 className="repo-card tech-panel tech-panel--interactive"
               >
-                <div className="repo-card__visual">
-                  <img
-                    src={getRepoPreviewUrl(repo.name)}
-                    alt={`${formatRepoName(repo.name)} preview`}
-                    loading="lazy"
-                    decoding="async"
-                    onError={handlePreviewError}
-                  />
+                <div className={`repo-card__visual ${repoPreviewsReady ? '' : 'repo-card__visual--fallback'}`}>
+                  {repoPreviewsReady && (
+                    <img
+                      src={getRepoPreviewUrl(repo.name)}
+                      alt={`${formatRepoName(repo.name)} preview`}
+                      width="1200"
+                      height="630"
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
+                      onError={handlePreviewError}
+                    />
+                  )}
                   <Github size={38} className="repo-card__fallback-icon text-purple-100" />
                 </div>
 

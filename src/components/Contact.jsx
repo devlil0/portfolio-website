@@ -19,7 +19,7 @@ export default function Contact() {
             className="hero-action flex items-center gap-3 px-5 py-3 text-slate-300 hover:text-white transition-colors duration-200 text-sm sm:text-base"
           >
             <Mail size={18} className="text-purple-200" />
-            Send message
+            devmurilloliveira@gmail.com
           </a>
 
           <div className="flex gap-4 sm:gap-6">
