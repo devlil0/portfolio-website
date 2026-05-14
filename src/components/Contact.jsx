@@ -13,7 +13,9 @@ export default function Contact() {
 
         <div className="flex flex-col items-center gap-8">
           <a
-            href="mailto:devmurilloliveira@gmail.com?subject=Portfolio%20contact&body=Hi%20Murillo%2C%0A%0A"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=devmurilloliveira@gmail.com&su=Portfolio%20contact&body=Hi%20Murillo%2C%0A%0A"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hero-action flex items-center gap-3 px-5 py-3 text-slate-300 hover:text-white transition-colors duration-200 text-sm sm:text-base"
           >
             <Mail size={18} className="text-purple-200" />

@@ -56,7 +56,9 @@ export default function About({ onNavigate }) {
                 View Work
               </a>
               <a
-                href="mailto:devmurilloliveira@gmail.com?subject=Portfolio%20contact&body=Hi%20Murillo%2C%0A%0A"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=devmurilloliveira@gmail.com&su=Portfolio%20contact&body=Hi%20Murillo%2C%0A%0A"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hero-action flex items-center justify-center gap-2 px-6 py-3 text-sm"
               >
                 <MessageCircle size={13} />
