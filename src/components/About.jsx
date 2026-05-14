@@ -77,7 +77,7 @@ export default function About({ onNavigate }) {
               width="3024"
               height="4032"
               loading="eager"
-              decoding="async"
+              decoding="sync"
               fetchPriority="high"
               className="w-full h-full grayscale group-hover:grayscale-0 transition-[filter] duration-300 object-cover object-top"
             />

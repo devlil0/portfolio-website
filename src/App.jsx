@@ -20,12 +20,14 @@ const PATH_TO_SECTION = Object.fromEntries(
 PATH_TO_SECTION['/about'] = 'about'
 
 const INTRO_MINIMUM_MS = 1900
-const INTRO_IMAGE_TIMEOUT_MS = 3600
 const INTRO_IMAGE_URL = '/paronama2.png'
 
 function preloadImage(url) {
   return new Promise((resolve) => {
     const image = new Image()
+    image.loading = 'eager'
+    image.decoding = 'sync'
+    image.fetchPriority = 'high'
 
     image.onload = async () => {
       try {
@@ -41,6 +43,8 @@ function preloadImage(url) {
     image.src = url
   })
 }
+
+const portraitImagePreload = preloadImage(INTRO_IMAGE_URL)
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
@@ -80,16 +84,12 @@ export default function App() {
       }, remaining)
     }
 
-    const timeout = window.setTimeout(finishIntro, INTRO_IMAGE_TIMEOUT_MS)
-
-    preloadImage(INTRO_IMAGE_URL).then(() => {
-      window.clearTimeout(timeout)
+    portraitImagePreload.then(() => {
       finishIntro()
     })
 
     return () => {
       cancelled = true
-      window.clearTimeout(timeout)
     }
   }, [])
 
@@ -111,6 +111,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    if (showIntro) return undefined
+
     const root = document.querySelector('main')
     if (!root) return undefined
 
@@ -164,7 +166,7 @@ export default function App() {
       mutationObserver.disconnect()
       observer.disconnect()
     }
-  }, [activeSection])
+  }, [activeSection, showIntro])
 
   useEffect(() => {
     const handlePopState = () => {
