@@ -76,9 +76,9 @@ export default function About({ onNavigate }) {
               alt="Murillo Oliveira"
               width="3024"
               height="4032"
-              loading="lazy"
+              loading="eager"
               decoding="async"
-              fetchPriority="low"
+              fetchPriority="high"
               className="w-full h-full grayscale group-hover:grayscale-0 transition-[filter] duration-300 object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent pointer-events-none" />

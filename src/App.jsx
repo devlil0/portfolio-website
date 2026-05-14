@@ -19,6 +19,29 @@ const PATH_TO_SECTION = Object.fromEntries(
 
 PATH_TO_SECTION['/about'] = 'about'
 
+const INTRO_MINIMUM_MS = 1900
+const INTRO_IMAGE_TIMEOUT_MS = 3600
+const INTRO_IMAGE_URL = '/paronama2.png'
+
+function preloadImage(url) {
+  return new Promise((resolve) => {
+    const image = new Image()
+
+    image.onload = async () => {
+      try {
+        if (image.decode) await image.decode()
+      } catch {
+        // The image is already loaded; decoding can fail on some browsers.
+      }
+
+      resolve()
+    }
+
+    image.onerror = resolve
+    image.src = url
+  })
+}
+
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
   const [activeSection, setActiveSection] = useState(() => PATH_TO_SECTION[window.location.pathname] || 'about')
@@ -41,11 +64,33 @@ export default function App() {
     setActiveSection(PATH_TO_SECTION[window.location.pathname] || 'about')
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 
-    const timer = window.setTimeout(() => {
-      setShowIntro(false)
-    }, 1900)
+    const startedAt = window.performance.now()
+    let cancelled = false
+    let introFinished = false
 
-    return () => window.clearTimeout(timer)
+    const finishIntro = () => {
+      if (cancelled || introFinished) return
+      introFinished = true
+
+      const elapsed = window.performance.now() - startedAt
+      const remaining = Math.max(INTRO_MINIMUM_MS - elapsed, 0)
+
+      window.setTimeout(() => {
+        if (!cancelled) setShowIntro(false)
+      }, remaining)
+    }
+
+    const timeout = window.setTimeout(finishIntro, INTRO_IMAGE_TIMEOUT_MS)
+
+    preloadImage(INTRO_IMAGE_URL).then(() => {
+      window.clearTimeout(timeout)
+      finishIntro()
+    })
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(timeout)
+    }
   }, [])
 
   useEffect(() => {

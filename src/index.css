@@ -38,17 +38,12 @@ body {
   overflow-x: hidden;
 }
 
-#about,
 #work,
 #skills,
 #journey,
 #contact {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
-}
-
-img {
-  content-visibility: auto;
 }
 
 .site-frame {
