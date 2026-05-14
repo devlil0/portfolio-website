@@ -95,17 +95,17 @@ export default function AboutTimeline() {
             const isOpen = open === i
 
             const milestoneRow = (
-              <div key={`item-${i}`} className="flex gap-4 sm:gap-10 items-start">
-                <div className="flex flex-col items-center w-12 sm:w-20 shrink-0 self-stretch">
+              <div key={`item-${i}`} className="flex gap-3 sm:gap-10 items-start">
+                <div className="flex flex-col items-center w-14 sm:w-20 shrink-0 self-stretch">
                   <div
-                    className={`w-12 h-12 sm:w-20 sm:h-20 border ${item.borderColor} bg-black/50 ring-1 ring-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.42)] flex items-center justify-center relative z-10 shrink-0`}
+                    className={`w-14 h-14 sm:w-20 sm:h-20 border ${item.borderColor} bg-black/50 ring-1 ring-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.42)] flex items-center justify-center relative z-10 shrink-0`}
                   >
                     <Icon size={20} className={`${item.color} sm:hidden`} />
                     <Icon size={30} className={`${item.color} hidden sm:block`} />
                   </div>
-                  <div className="border border-white/10 bg-black/50 px-3 py-1 mt-2 z-10 shrink-0">
+                  <div className="w-14 sm:w-auto border border-white/10 bg-black/50 px-0 sm:px-3 py-1 mt-2 z-10 shrink-0 text-center">
                     <span
-                      className="text-slate-400 text-xs sm:text-sm tracking-[0.22em]"
+                      className="text-slate-400 text-[0.68rem] sm:text-sm tracking-[0.16em] sm:tracking-[0.22em]"
                       style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 400 }}
                     >
                       {item.year}
@@ -116,7 +116,7 @@ export default function AboutTimeline() {
                   )}
                 </div>
 
-                <div className="timeline-card flex-1">
+                <div className="timeline-card flex-1 min-w-0">
                   <button
                     className="w-full flex items-start justify-between p-4 sm:p-7 text-left"
                     onClick={() => setOpen(isOpen ? null : i)}
@@ -171,8 +171,8 @@ export default function AboutTimeline() {
 
             if (i < milestones.length - 1) {
               const separator = (
-                <div key={`sep-${i}`} className="flex gap-4 sm:gap-10">
-                  <div className="flex flex-col items-center w-12 sm:w-20">
+                <div key={`sep-${i}`} className="flex gap-3 sm:gap-10">
+                  <div className="flex flex-col items-center w-14 sm:w-20">
                     <div className="hidden md:block w-px bg-white/10 h-8" />
                   </div>
                   <div className="h-8 md:h-0 flex-1" />

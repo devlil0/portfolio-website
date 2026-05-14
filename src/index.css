@@ -1342,12 +1342,15 @@ body {
   }
 
   .site-frame::before {
-    background-size: 2.35rem 2.35rem, 2.35rem 2.35rem, 9rem 9rem, 9rem 9rem;
-    opacity: 0.48;
+    background:
+      linear-gradient(rgba(148, 163, 184, 0.032) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+    background-size: 3.6rem 3.6rem;
+    opacity: 0.42;
   }
 
   .site-frame::after {
-    opacity: 0.45;
+    opacity: 0.32;
   }
 
   .section-shell {
@@ -1419,19 +1422,9 @@ body {
 
 }
 
-.site-frame--chrome-lite .site-nav,
-.site-frame--chrome-lite .site-nav-menu,
 .site-frame--chrome-lite .tech-panel {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-}
-
-.site-frame--chrome-lite .hero-floating-word,
-.site-frame--chrome-lite .about-gradient-word {
-  animation: none;
-  filter: none;
-  text-shadow: none;
-  will-change: auto;
 }
 
 .site-frame--chrome-lite .reveal,
