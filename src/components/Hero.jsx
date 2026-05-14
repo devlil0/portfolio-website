@@ -62,7 +62,7 @@ export default function Hero() {
                     View Work
                   </a>
                   <a
-                    href="#contact"
+                    href="mailto:devmurilloliveira@gmail.com"
                     className="hero-action flex items-center justify-center gap-2 px-6 py-3 text-sm w-full"
                   >
                     <MessageCircle size={13} />

@@ -280,7 +280,7 @@ export default function Projects() {
               </p>
             </div>
             <img
-              src="/spacex-optimized.jpg"
+              src="/spacex.png"
               alt="Development workspace"
               width="1000"
               height="1333"

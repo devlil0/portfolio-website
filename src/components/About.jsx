@@ -56,8 +56,7 @@ export default function About({ onNavigate }) {
                 View Work
               </a>
               <a
-                href="/contact"
-                onClick={(event) => handleSectionLink(event, 'contact', '/contact')}
+                href="mailto:devmurilloliveira@gmail.com"
                 className="hero-action flex items-center justify-center gap-2 px-6 py-3 text-sm"
               >
                 <MessageCircle size={13} />
@@ -73,11 +72,11 @@ export default function About({ onNavigate }) {
             <img
               src="/paronama2.png"
               alt="Murillo Oliveira"
-              width="3024"
-              height="4032"
+              width="1200"
+              height="1600"
               loading="lazy"
               decoding="async"
-              className="w-full h-full grayscale group-hover:grayscale-0 transition-[filter] duration-300 object-cover"
+              className="w-full h-full grayscale group-hover:grayscale-0 transition-[filter] duration-300 object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent pointer-events-none" />
           </div>
