@@ -18,7 +18,7 @@ export default function About({ onNavigate }) {
   return (
     <section id="about" className="section-shell">
       <div className="section-inner">
-        <div className="reveal hero-cascade-item hero-terminal tech-panel mb-10 md:mb-14">
+        <div className="hero-cascade-item hero-terminal tech-panel mb-10 md:mb-14">
           <div className="hero-terminal__bar text-[0.68rem] sm:text-xs">
             <div className="hero-terminal__dots" aria-hidden="true">
               <span />
