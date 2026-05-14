@@ -391,11 +391,11 @@ img {
 }
 
 .site-frame--ready .intro-nav--mobile {
-  animation: navEntrance 1.18s cubic-bezier(0.19, 1, 0.22, 1) 0.12s forwards;
+  animation: navEntrance 1.05s cubic-bezier(0.19, 1, 0.22, 1) 0.32s forwards;
 }
 
 .site-frame--ready .intro-nav--desktop {
-  animation: navEntranceDesktop 1.18s cubic-bezier(0.19, 1, 0.22, 1) 0.12s forwards;
+  animation: navEntranceDesktop 1.05s cubic-bezier(0.19, 1, 0.22, 1) 0.32s forwards;
 }
 
 .site-nav {
@@ -976,12 +976,12 @@ img {
   animation: cascadePop 1.32s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
-.hero-cascade-item:nth-child(1) { animation-delay: 0.18s; }
-.hero-cascade-item:nth-child(2) { animation-delay: 0.32s; }
-.hero-cascade-item:nth-child(3) { animation-delay: 0.46s; }
-.hero-cascade-item:nth-child(4) { animation-delay: 0.6s; }
-.hero-cascade-item:nth-child(5) { animation-delay: 0.74s; }
-.hero-cascade-item:nth-child(6) { animation-delay: 0.88s; }
+.hero-cascade-item:nth-child(1) { animation-delay: 0.34s; }
+.hero-cascade-item:nth-child(2) { animation-delay: 0.48s; }
+.hero-cascade-item:nth-child(3) { animation-delay: 0.62s; }
+.hero-cascade-item:nth-child(4) { animation-delay: 0.76s; }
+.hero-cascade-item:nth-child(5) { animation-delay: 0.9s; }
+.hero-cascade-item:nth-child(6) { animation-delay: 1.04s; }
 
 .reveal {
   opacity: 0;
