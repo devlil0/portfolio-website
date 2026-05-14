@@ -1300,6 +1300,47 @@ body {
     scroll-padding-top: 4rem;
   }
 
+  .intro-screen {
+    min-height: 100dvh;
+    padding: 1.5rem;
+    align-items: center;
+    background:
+      radial-gradient(circle at 50% 44%, rgba(168, 85, 247, 0.18), transparent 14rem),
+      radial-gradient(circle at 50% 58%, rgba(216, 180, 254, 0.08), transparent 11rem),
+      #000;
+  }
+
+  .intro-screen::before {
+    background-size: 100% 0.38rem, 2.35rem 100%;
+    opacity: 0.18;
+  }
+
+  .intro-screen::after {
+    background: linear-gradient(105deg, transparent 28%, rgba(216, 180, 254, 0.14) 48%, transparent 68%);
+  }
+
+  .intro-screen__glow {
+    width: min(86vw, 22rem);
+    height: min(86vw, 22rem);
+    transform: translateY(-0.35rem);
+  }
+
+  .intro-screen__text {
+    width: 7.8ch;
+    max-width: calc(100vw - 3rem);
+    font-size: clamp(2.35rem, 15vw, 3.65rem);
+    line-height: 1;
+    transform-origin: center;
+  }
+
+  .intro-screen__cursor {
+    left: 6.82ch;
+    filter: none;
+    text-shadow:
+      0 0 10px rgba(216, 180, 254, 0.7),
+      0 0 22px rgba(168, 85, 247, 0.36);
+  }
+
   .site-frame::before {
     background-size: 2.35rem 2.35rem, 2.35rem 2.35rem, 9rem 9rem, 9rem 9rem;
     opacity: 0.48;
