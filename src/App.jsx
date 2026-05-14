@@ -56,7 +56,7 @@ const portraitImagePreload = preloadImage(INTRO_IMAGE_URL)
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
-  const [activeSection, setActiveSection] = useState(() => PATH_TO_SECTION[window.location.pathname] || 'about')
+  const [activeSection, setActiveSection] = useState('about')
   const [useChromeLiteMode] = useState(() => isChromeBrowser())
 
   const navigateToSection = useCallback((sectionId, path) => {
@@ -70,11 +70,11 @@ export default function App() {
       window.history.scrollRestoration = 'manual'
     }
 
-    if (window.location.hash) {
-      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    if (window.location.pathname !== '/' || window.location.hash) {
+      window.history.replaceState(null, '', '/')
     }
 
-    setActiveSection(PATH_TO_SECTION[window.location.pathname] || 'about')
+    setActiveSection('about')
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 
     const startedAt = window.performance.now()
