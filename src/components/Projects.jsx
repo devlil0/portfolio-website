@@ -5,6 +5,13 @@ const GITHUB_USER = 'devlil0'
 const GITHUB_PROFILE_MARKDOWN_URL = 'https://r.jina.ai/http://github.com/devlil0'
 const GITHUB_REPOS_MARKDOWN_URL = 'https://r.jina.ai/http://github.com/devlil0?tab=repositories'
 
+const baselineProfile = {
+  totalRepos: 11,
+  stars: 6,
+  contributionsLastYear: 224,
+  activeYears: 1,
+}
+
 const fallbackRepos = [
   {
     id: 'whey-promotion-bot',
@@ -43,8 +50,10 @@ const languageColors = {
   CSS: '#a78bfa',
 }
 
-let githubDataCache = null
-let githubDataPromise = null
+let githubProfileCache = null
+let githubProfilePromise = null
+let githubReposCache = null
+let githubReposPromise = null
 
 const KNOWN_LANGUAGES = ['JavaScript', 'TypeScript', 'Java', 'Python', 'HTML', 'CSS', 'Kotlin', 'Go', 'Shell', 'C++']
 
@@ -169,60 +178,84 @@ async function fetchMarkdown(url) {
   return response.text()
 }
 
-function loadGitHubData() {
-  if (githubDataCache) return Promise.resolve(githubDataCache)
-  if (githubDataPromise) return githubDataPromise
+function mergeWithBaselineProfile(profile) {
+  return {
+    totalRepos: Math.max(profile?.totalRepos ?? 0, baselineProfile.totalRepos),
+    stars: Math.max(profile?.stars ?? 0, baselineProfile.stars),
+    contributionsLastYear: Math.max(profile?.contributionsLastYear ?? 0, baselineProfile.contributionsLastYear),
+    activeYears: Math.max(profile?.activeYears ?? 0, baselineProfile.activeYears),
+  }
+}
 
-  githubDataPromise = (async () => {
-    try {
-      const [profileMarkdown, reposMarkdown] = await Promise.all([
-        fetchMarkdown(GITHUB_PROFILE_MARKDOWN_URL),
-        fetchMarkdown(GITHUB_REPOS_MARKDOWN_URL),
-      ])
+function loadGitHubProfileData() {
+  if (githubProfileCache) return Promise.resolve(githubProfileCache)
+  if (githubProfilePromise) return githubProfilePromise
 
-      const profileData = parseProfileMarkdown(profileMarkdown)
-      const repos = parseRepoMarkdown(reposMarkdown)
-
-      const payload = {
-        profile: profileData,
-        repos,
-      }
-
-      githubDataCache = payload
-      return payload
-    } catch (error) {
-      githubDataPromise = null
+  githubProfilePromise = fetchMarkdown(GITHUB_PROFILE_MARKDOWN_URL)
+    .then((markdown) => {
+      githubProfileCache = mergeWithBaselineProfile(parseProfileMarkdown(markdown))
+      return githubProfileCache
+    })
+    .catch((error) => {
+      githubProfilePromise = null
       throw error
-    }
-  })()
+    })
 
-  return githubDataPromise
+  return githubProfilePromise
+}
+
+function loadGitHubReposData() {
+  if (githubReposCache) return Promise.resolve(githubReposCache)
+  if (githubReposPromise) return githubReposPromise
+
+  githubReposPromise = fetchMarkdown(GITHUB_REPOS_MARKDOWN_URL)
+    .then((markdown) => {
+      githubReposCache = parseRepoMarkdown(markdown)
+      return githubReposCache
+    })
+    .catch((error) => {
+      githubReposPromise = null
+      throw error
+    })
+
+  return githubReposPromise
 }
 
 export default function Projects() {
   const [repos, setRepos] = useState([])
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(baselineProfile)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [repoPreviewsReady, setRepoPreviewsReady] = useState(false)
 
   useEffect(() => {
     let ignore = false
+    let idleId = null
+    let timer = null
+
+    async function loadGitHubProfile() {
+      try {
+        const profileData = await loadGitHubProfileData()
+
+        if (!ignore) setProfile(profileData)
+      } catch {
+        if (!ignore) setProfile(baselineProfile)
+      }
+    }
 
     async function loadGitHubRepos() {
       try {
         setLoading(true)
         setError('')
-        const data = await loadGitHubData()
+        const repoData = await loadGitHubReposData()
 
         if (!ignore) {
-          setProfile(data.profile)
-          setRepos(data.repos)
+          setRepos(repoData)
         }
       } catch (requestError) {
         if (!ignore) {
           setError('Unable to load live GitHub data right now.')
-          setProfile(null)
+          setProfile(baselineProfile)
           setRepos(fallbackRepos)
         }
       } finally {
@@ -230,10 +263,18 @@ export default function Projects() {
       }
     }
 
-    loadGitHubRepos()
+    loadGitHubProfile()
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(loadGitHubRepos, { timeout: 1200 })
+    } else {
+      timer = window.setTimeout(loadGitHubRepos, 350)
+    }
 
     return () => {
       ignore = true
+      if (idleId) window.cancelIdleCallback(idleId)
+      if (timer) window.clearTimeout(timer)
     }
   }, [])
 
