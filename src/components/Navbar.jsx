@@ -5,7 +5,7 @@ const navLinks = [
   { icon: User,      label: 'About',   sectionId: 'about',   path: '/' },
   { icon: Briefcase, label: 'Work',    sectionId: 'work',    path: '/work' },
   { icon: Terminal,  label: 'Skills',  sectionId: 'skills',  path: '/skills' },
-  { icon: MessageCircle, label: 'Connect With Me', sectionId: 'contact', path: '/contact' },
+  { icon: MessageCircle, label: 'Contact Me', sectionId: 'contact', path: '/contact' },
 ]
 
 const socialLinks = [
