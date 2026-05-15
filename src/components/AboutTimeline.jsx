@@ -186,7 +186,8 @@ export default function AboutTimeline() {
         </div>
       </div>
 
-      <div className="about-deferred resume-download-card reveal tech-panel tech-panel--interactive mt-20 md:mt-28 p-6 sm:p-8">
+      <div className="about-deferred curriculum-card resume-download-card reveal tech-panel tech-panel--interactive mt-20 md:mt-28 p-6 sm:p-8">
+        <span className="curriculum-border-beam" aria-hidden="true" />
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="flex items-start gap-4">
             <div className="border border-purple-300/25 bg-purple-300/10 p-3 text-purple-100">
