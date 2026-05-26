@@ -71,13 +71,13 @@ src/
 
 This project is configured for deployment on Vercel.
 
-## Note
-
-Created with AI-assisted development and customized by Murillo Oliveira.
-
 ## Author
 
 Murillo Oliveira
 
 - GitHub: [devlil0](https://github.com/devlil0)
 - LinkedIn: [murilloliveira999](https://linkedin.com/in/murilloliveira999)
+
+## Note
+
+Built and customized by Murillo Oliveira.
